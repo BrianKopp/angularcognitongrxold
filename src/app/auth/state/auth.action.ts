@@ -28,7 +28,7 @@ export class LoginUserErrorAction implements Action {
 
 export class LogoutUserAction implements Action {
     public type: string = LOGOUT_USER;
-    constructor() {}
+    constructor(public payload: {user: CognitoUser, logoutGlobally: boolean}) {}
 }
 
 export class LogoutUserSuccessAction implements Action {

@@ -45,4 +45,14 @@ export class CognitoService {
     });
     return Observable.throw(new Error('loginUser did not complete successfully'));
   }
+  logoutUser(user: CognitoUser, logoutGlobally: boolean = false) {
+    if (logoutGlobally) {
+      user.signOut();
+    } else {
+      user.globalSignOut({
+        onSuccess: (msg) => { return; },
+        onFailure: (err) => new Error(`error signing out. ${err}`)
+      });
+    }
+  }
 }
