@@ -1,3 +1,4 @@
+import { CognitoUser } from 'amazon-cognito-identity-js';
 import { Action } from '@ngrx/store';
 import { createActionType } from "./utils";
 
@@ -17,7 +18,7 @@ export class LoginUserAction implements Action {
 
 export class LoginUserSuccessAction implements Action {
     public type: string = LOGIN_USER_SUCCESS;
-    constructor(public payload: {User: any}) {}
+    constructor(public payload: {user: CognitoUser, accessToken: string, idToken: string}) {}
 }
 
 export class LoginUserErrorAction implements Action {
