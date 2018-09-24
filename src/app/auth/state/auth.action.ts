@@ -33,7 +33,7 @@ export class LogoutUserAction implements Action {
 
 export class LogoutUserSuccessAction implements Action {
     public type: string = LOGOUT_USER_SUCCESS;
-    constructor() {}
+    constructor(public payload?: any) {}
 }
 
 export class LogoutUserErrorAction implements Action {
