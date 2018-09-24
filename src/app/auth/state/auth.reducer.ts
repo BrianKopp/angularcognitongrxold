@@ -65,3 +65,7 @@ export function reducer(state: AuthState = initialState, action: Actions): AuthS
     default: return state;
   }
 }
+
+export const isAuthenticated = (state: AuthState) => state.LoggedIn;
+export const getAuthenticatedUser = (state: AuthState) => state.CurrentUser;
+export const isLoading = (state: AuthState) => state.LoggingIn || state.LoggingOut;
