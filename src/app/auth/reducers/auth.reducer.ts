@@ -1,16 +1,17 @@
 import { CognitoUser } from "amazon-cognito-identity-js";
-import { Actions, LOGIN_USER, LOGIN_USER_SUCCESS, LoginUserSuccessAction, LOGIN_USER_ERROR, LoginUserErrorAction, LOGOUT_USER, LOGOUT_USER_SUCCESS, LOGOUT_USER_ERROR } from "./auth.action";
+import * as actions from '../state/auth.action';
 
-export interface AuthState {
+
+export interface State {
   LoggedIn: boolean;
   LoggingIn: boolean;
   LoggingOut: boolean;
-  CurrentUser?: CognitoUser;
-  AccessToken?: string;
-  IdToken?: string;
+  CurrentUser: CognitoUser | null;
+  AccessToken: string | null;
+  IdToken: string | null;
 }
 
-const initialState: AuthState = {
+const initialState: State = {
   LoggedIn: false,
   LoggingIn: false,
   LoggingOut: false,
@@ -19,12 +20,12 @@ const initialState: AuthState = {
   IdToken: null
 };
 
-export function reducer(state: AuthState = initialState, action: Actions): AuthState {
+export function reducer(state: State = initialState, action: actions.Actions): State {
   switch(action.type) {
-    case LOGIN_USER:
+    case actions.LOGIN_USER:
       return {...state, LoggingIn: true};
-    case LOGIN_USER_SUCCESS:
-      const sa = action as LoginUserSuccessAction;
+    case actions.LOGIN_USER_SUCCESS:
+      const sa = action as actions.LoginUserSuccessAction;
       return {
         ...state,
         LoggingIn: false,
@@ -33,8 +34,8 @@ export function reducer(state: AuthState = initialState, action: Actions): AuthS
         AccessToken: sa.payload.accessToken,
         IdToken: sa.payload.idToken
       };
-    case LOGIN_USER_ERROR:
-      const ea = action as LoginUserErrorAction;
+    case actions.LOGIN_USER_ERROR:
+      const ea = action as actions.LoginUserErrorAction;
       return {
         ...state,
         LoggingIn: false,
@@ -43,12 +44,12 @@ export function reducer(state: AuthState = initialState, action: Actions): AuthS
         AccessToken: null,
         IdToken: null
       };
-    case LOGOUT_USER:
+    case actions.LOGOUT_USER:
       return {
         ...state,
         LoggingOut: true
       };
-    case LOGOUT_USER_SUCCESS:
+    case actions.LOGOUT_USER_SUCCESS:
       return {
         ...state,
         LoggedIn: false,
@@ -57,7 +58,7 @@ export function reducer(state: AuthState = initialState, action: Actions): AuthS
         AccessToken: null,
         IdToken: null
       }
-    case LOGOUT_USER_ERROR:
+    case actions.LOGOUT_USER_ERROR:
       return {
         ...state,
         LoggingOut: false
@@ -66,6 +67,6 @@ export function reducer(state: AuthState = initialState, action: Actions): AuthS
   }
 }
 
-export const isAuthenticated = (state: AuthState) => state.LoggedIn;
-export const getAuthenticatedUser = (state: AuthState) => state.CurrentUser;
-export const isLoading = (state: AuthState) => state.LoggingIn || state.LoggingOut;
+export const isAuthenticated = (state: State) => state.LoggedIn;
+export const getAuthenticatedUser = (state: State) => state.CurrentUser;
+export const isLoading = (state: State) => state.LoggingIn || state.LoggingOut;

@@ -1,10 +1,10 @@
-import { CognitoService } from './../cognito.service';
 import { Injectable } from "@angular/core";
 import { Effect, Actions } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of } from "rxjs";
 import { map, switchMap, catchError } from 'rxjs/operators';
 
+import { CognitoService } from './../cognito.service';
 import {
   LOGIN_USER,
   LOGOUT_USER,

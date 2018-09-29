@@ -5,15 +5,15 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { LoginComponent } from './components/login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
-import { reducer } from './state/auth.reducer';
+
 import { AuthorizationEffects } from './state/auth.effects';
-import { RouterModule } from '@angular/router';
+import { reducers } from './reducers';
 
 @NgModule({
   imports: [
     CommonModule,
     AuthRoutingModule,
-    StoreModule.forFeature('auth', reducer),
+    StoreModule.forFeature('auth', reducers),
     EffectsModule.forFeature([AuthorizationEffects])
   ],
   declarations: [LoginComponent]
